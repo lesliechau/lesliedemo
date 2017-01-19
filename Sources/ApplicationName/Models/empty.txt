@@ -1,0 +1,6 @@
+This is where your models will live.
+
+For example,
+
+- Customer.swift
+- Employee.swift
