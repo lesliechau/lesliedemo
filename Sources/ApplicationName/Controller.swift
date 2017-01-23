@@ -62,6 +62,8 @@ public class Controller {
         router.all("/", middleware: StaticFileServer())
         // end if
         
+        router.all("/*", middleware: BodyParser())
+        
     }
     
 }
