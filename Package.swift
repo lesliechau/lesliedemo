@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         
         // if <%= bluemix %> selected add:
-        .Package(url: "https://github.ibm.com/IBM-Swift/bluemix-config.git",      majorVersion: 0),
+        .Package(url: "git@github.ibm.com:IBM-Swift/bluemix-config.git",      majorVersion: 0),
         // else 
         // .Package(url: "https://github.ibm.com/IBM-Swift/swift-configuration.git", majorVersion: 0),
         // end if
