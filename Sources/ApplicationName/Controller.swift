@@ -82,6 +82,8 @@ public class Controller {
         let monitoring = metrics.monitor()
         // end if
         
+        router.all("/*", middleware: BodyParser())
+
         
     }
     

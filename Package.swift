@@ -38,7 +38,7 @@ let package = Package(
         // end if
         
         // if Runtime Monitoring is selected <% monitoring %>
-        .Package(url: "https://github.com/IBM-Swift/SwiftMetrics",       majorVersion: 0),
+        .Package(url: "https://github.com/RuntimeTools/SwiftMetrics.git",       majorVersion: 0),
         // end if
         
         .Package(url: "https://github.com/IBM-Swift/Kitura.git",             majorVersion: 1),
