@@ -6,6 +6,14 @@ import SwiftyJSON
 import LoggerAPI
 import SwiftConfiguration
 
+// authentication-related imports
+import Credentials
+
+// if <%= mca %> is selected
+import MobileClientAccessKituraCredentialsPlugin
+import MobileClientAccess
+
+
 // If <% bluemix %> is selected, add the following:
 // import BluemixConfig
 // If <% cloudant %>  is selected, add the following:
@@ -55,6 +63,16 @@ public class Controller {
         // if <%= redis %> and <% bluemix %> are selected
         // self.redisService = try manager.getRedisService(name: "todolist-redis")
         // end if
+        
+        // authentication
+        let credentials = Credentials() // middleware for securing endpoints
+        
+        // if <%= mca %> is selected
+        // MCA credentials
+        credentials.register(plugin: MobileClientAccessKituraCredentialsPlugin())
+        
+        // Assign middleware instance
+        router.get("/*", middleware: credentials)
         
         
         // if <% web %> is selected, add the following:

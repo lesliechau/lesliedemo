@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         
         // if <%= bluemix %> selected add:
-        .Package(url: "https://github.ibm.com/IBM-Swift/bluemix-config.git",      majorVersion: 0),
+        .Package(url: "git@github.ibm.com:IBM-Swift/bluemix-config.git",      majorVersion: 0),
         // else 
         // .Package(url: "https://github.ibm.com/IBM-Swift/swift-configuration.git", majorVersion: 0),
         // end if
@@ -38,7 +38,12 @@ let package = Package(
         // end if
         
         .Package(url: "https://github.com/IBM-Swift/Kitura.git",             majorVersion: 1),
-        .Package(url: "https://github.com/IBM-Swift/HeliumLogger.git",       majorVersion: 1)
+        .Package(url: "https://github.com/IBM-Swift/HeliumLogger.git",       majorVersion: 1),
+        
+        
+        // if MCA authentication is selected
+        //.Package(url: "https://github.com/jkingoliver/bms-mca-kitura-credentials-plugin.git", majorVersion: 0, minor: 4)
+        .Package(url: "https://github.com/ibm-bluemix-mobile-services/bms-mca-kitura-credentials-plugin.git", majorVersion: 0, minor: 4)
     ],
     exclude: []
 )
