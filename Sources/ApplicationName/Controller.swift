@@ -4,7 +4,7 @@ import Kitura
 import KituraNet
 import SwiftyJSON
 import LoggerAPI
-import SwiftConfiguration
+import Configuration
 
 // authentication-related imports
 import Credentials
