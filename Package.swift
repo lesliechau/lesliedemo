@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         
         // if <%= bluemix %> selected add:
-        .Package(url: "https://github.ibm.com/IBM-Swift/bluemix-config.git",      majorVersion: 0),
+        .Package(url: "git@github.ibm.com:IBM-Swift/bluemix-config.git",      majorVersion: 0),
         // else 
         // .Package(url: "https://github.ibm.com/IBM-Swift/swift-configuration.git", majorVersion: 0),
         // end if
@@ -35,6 +35,10 @@ let package = Package(
         
         // if PostgreSQL selected
         // .Package(url: "https://github.com/IBM-Swift/Swift-Kuery.git",     majorVersion: 0),
+        // end if
+        
+        // if Runtime Monitoring is selected <% monitoring %>
+        .Package(url: "https://github.com/RuntimeTools/SwiftMetrics.git",       majorVersion: 0),
         // end if
         
         .Package(url: "https://github.com/IBM-Swift/Kitura.git",             majorVersion: 1),

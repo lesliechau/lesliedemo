@@ -6,14 +6,24 @@ import SwiftyJSON
 import LoggerAPI
 import SwiftConfiguration
 
-// If <% bluemix %> is selected, add the following:
+// if <% bluemix %> is selected, add the following:
 // import BluemixConfig
+// end if
+
+// if <% metrics %> is selected, add the following:
+import SwiftMetrics
+import SwiftMetricsKitura
+//
+
 // If <% cloudant %>  is selected, add the following:
 // import CouchDB
 // end if
+
 // If <% redis %>  is selected, add the following:
 // import SwiftRedis
 // end if
+
+//
 
 public class Controller {
 
@@ -28,6 +38,10 @@ public class Controller {
     // if <%= redis %> is selected, add the following:
     // let redis: Redis
     // let redisService: RedisService
+    // end if
+    
+    // if <% metrics %> is selected:
+    let metrics: SwiftMetrics!
     // end if
 
     public var port: Int {
@@ -62,7 +76,14 @@ public class Controller {
         router.all("/", middleware: StaticFileServer())
         // end if
         
+        // if <% metrics %> is selected:
+        metrics = try SwiftMetrics()
+        SwiftMetricsKitura(swiftMetricsInstance: metrics)
+        let monitoring = metrics.monitor()
+        // end if
+        
         router.all("/*", middleware: BodyParser())
+
         
     }
     
