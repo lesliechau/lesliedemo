@@ -11,8 +11,9 @@ import Credentials
 
 // if <%= mca %> is selected
 import MobileClientAccessKituraCredentialsPlugin
-import MobileClientAccess
 
+// if <%= facebook %> is selected
+import CredentialsFacebook
 
 // If <% bluemix %> is selected, add the following:
 import BluemixConfig
@@ -83,7 +84,23 @@ public class Controller {
         
         // if <%= mca %> is selected
         // MCA credentials
-        credentials.register(plugin: MobileClientAccessKituraCredentialsPlugin())
+        //credentials.register(plugin: MobileClientAccessKituraCredentialsPlugin())
+        
+        // if <%= fbToken %> is selected: Facebook OAuth2 token
+        // TODO: should we accept input of options in the token init?
+        credentials.register(plugin: CredentialsFacebookToken())
+        
+        // if <%= fbAuth %> is selected: Facebook OAuth2 Auth flow login
+        let fbClientId: String = "clientId"  // <%= fbClientId %> the App ID of your app in the Facebook Developer dashboard
+        let fbClientSecret: String = "clientSecret"  // <%= fbClientSecret %> the App Secret of your app in the Facebook Developer dashboard
+        let callbackUrl: String = "" + "/login/facebook/callback" // <%= fbCallback %>
+        let options: [String:Any] = [:]  // <%= fbOptions %>
+        let fbCredentials = CredentialsFacebook(clientId: fbClientId,
+                                                clientSecret: fbClientSecret,
+                                                callbackUrl: callbackUrl,
+                                                options: options)
+        
+        credentials.register(plugin: fbCredentials)
         
         // Assign middleware instance
         router.get("/*", middleware: credentials)
