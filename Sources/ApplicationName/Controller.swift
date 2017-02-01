@@ -15,6 +15,9 @@ import MobileClientAccessKituraCredentialsPlugin
 // if <%= facebook %> is selected
 import CredentialsFacebook
 
+// if <%= http %> is selected
+import CredentialsHTTP
+
 // If <% bluemix %> is selected, add the following:
 import BluemixConfig
 // end if
@@ -102,6 +105,40 @@ public class Controller {
         
         credentials.register(plugin: fbCredentials)
         
+        // if <%= httpBasic %> is selected
+        let users: [String:String] = ["John" : "12345", "Mary" : "qwerasdf"]  // <%= httpUsers %>
+        
+        let basicCredentials = CredentialsHTTPBasic(verifyPassword: { userId, password, callback in
+            if let storedPassword = users[userId] {
+                if (storedPassword == password) {
+                    callback(UserProfile(id: userId, displayName: userId, provider: "HTTPBasic"))
+                }
+            }
+            else {
+                callback(nil)
+            }
+        })
+        
+        credentials.register(plugin: basicCredentials)
+        
+        // if <%= httpDigest %> is selected
+        let users2: [String:String] = ["John" : "12345", "Mary" : "qwerasdf"]  // <%= httpUsers %>
+        let opaque: String? = "0a0b0c0d"  // <%= opaque %>
+        let realm: String? = "Kitura-users" // <%= realm %>
+        
+        let digestCredentials = CredentialsHTTPDigest(userProfileLoader: { userId, callback in
+            if let storedPassword = users[userId] {
+                callback(UserProfile(id: userId, displayName: userId, provider: "HTTPDigest"), storedPassword)
+            }
+            else {
+                callback(nil, nil)
+            }
+        }, opaque: opaque, realm: realm)
+        credentials.register(plugin: digestCredentials)
+        
+        
+        
+        
         // Assign middleware instance
         router.get("/*", middleware: credentials)
         
@@ -112,6 +149,9 @@ public class Controller {
         // end if
         
         // if <% metrics %> is selected:
+        
+        
+        
         metrics = try SwiftMetrics()
         SwiftMetricsKitura(swiftMetricsInstance: metrics)
         let monitoring = metrics.monitor()
