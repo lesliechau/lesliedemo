@@ -6,36 +6,32 @@ import SwiftyJSON
 import LoggerAPI
 import Configuration
 
-// authentication-related imports
-import Credentials
+// TODO including BluemixConfig needs to automatically include SwiftMetrics
+// <%= configuration/bluemix/importModule %>
+import BluemixConfig
 
-// if <%= mca %> is selected
+// <%= auth/mca/importModule %>
+import Credentials
 import MobileClientAccessKituraCredentialsPlugin
 
-// if <%= facebook %> is selected
+// <%= auth/facebook/importModule %>
 import CredentialsFacebook
 
-// if <%= http %> is selected
+// <%= auth/google/importModule %>
+import CredentialsGoogle
+
+// <%= auth/http/importModule %>
 import CredentialsHTTP
 
-// If <% bluemix %> is selected, add the following:
-import BluemixConfig
-// end if
-
-// if <% metrics %> is selected, add the following:
+// <%= middleware/profiling/importModule %>
 import SwiftMetrics
 import SwiftMetricsKitura
-//
 
-// If <% cloudant %>  is selected, add the following:
-// import CouchDB
-// end if
+// <%= data/cloudant/importModule %>
+import CouchDB
 
-// If <% redis %>  is selected, add the following:
-// import SwiftRedis
-// end if
-
-//
+// <%= data/redis/importModule %>
+import SwiftRedis
 
 public class Controller {
 
@@ -43,19 +39,15 @@ public class Controller {
     
     public let manager: ConfigurationManager
     
-    // if <%= cloudant %> is selected, add the following:
-    // internal let database: Database
-    // end if
+    //internal let database: Database
     
-    // if <%= redis %> is selected, add the following:
-    // let redis: Redis
-    // let redisService: RedisService
-    // end if
+    //let redis: Redis
+    //let redisService: RedisService
     
-    // if <% metrics %> is selected:
     let metrics: SwiftMetrics!
-    // end if
-
+    
+    // QUESTION: how do we get port in the case of using Configuration, not BluemixConfig?
+    // <%= configuration/bluemix/initializePort %>
     public var port: Int {
         return manager.applicationPort
     }
@@ -82,32 +74,44 @@ public class Controller {
         // self.redisService = try manager.getRedisService(name: "todolist-redis")
         // end if
         
-        // authentication
         let credentials = Credentials() // middleware for securing endpoints
         
-        // if <%= mca %> is selected
-        // MCA credentials
+        // <%= auth/mca/initializeMCA %>
         //credentials.register(plugin: MobileClientAccessKituraCredentialsPlugin())
         
-        // if <%= fbToken %> is selected: Facebook OAuth2 token
-        // TODO: should we accept input of options in the token init?
-        credentials.register(plugin: CredentialsFacebookToken())
+        // <%= auth/facebook/initializeToken %>
+        let fbOptions: [String: Any] = [:] // <%= fbOptions %>  // an optional dictionary ([String:Any]) of Facebook authentication options
+        credentials.register(plugin: CredentialsFacebookToken(options: fbOptions))
         
-        // if <%= fbAuth %> is selected: Facebook OAuth2 Auth flow login
-        let fbClientId: String = "clientId"  // <%= fbClientId %> the App ID of your app in the Facebook Developer dashboard
-        let fbClientSecret: String = "clientSecret"  // <%= fbClientSecret %> the App Secret of your app in the Facebook Developer dashboard
-        let callbackUrl: String = "" + "/login/facebook/callback" // <%= fbCallback %>
-        let options: [String:Any] = [:]  // <%= fbOptions %>
+        // <%= auth/facebook/initializeAuthLogin %>
+        let fbClientId = "clientId"  // <%= fbClientId %> the App ID of your app in the Facebook Developer dashboard
+        let fbClientSecret = "clientSecret"  // <%= fbClientSecret %> the App Secret of your app in the Facebook Developer dashboard
+        let callbackUrl = "" + "/login/facebook/callback" // <%= fbCallback %>
+        let options: [String: Any] = [:]  // <%= fbOptions %>
         let fbCredentials = CredentialsFacebook(clientId: fbClientId,
                                                 clientSecret: fbClientSecret,
                                                 callbackUrl: callbackUrl,
                                                 options: options)
-        
         credentials.register(plugin: fbCredentials)
         
-        // if <%= httpBasic %> is selected
-        let users: [String:String] = ["John" : "12345", "Mary" : "qwerasdf"]  // <%= httpUsers %>
+        // <%= auth/google/initializeAuthLogin %>
+        let clientId = "cliendId" //<%= googleClientId %>  // the Client ID from the credentials tab of your project in the Google Developer's console
+        let clientSecret = "clientSecret" //<%= googleClientSecret %>  // the Client Secret from the credentials tab of your project in the Google Developer's console
+        let googleCallbackUrl = "callbackUrl" //<%= googleCallback %>  // ex: serverUrl + "/login/google/callback"
+        let googleOptions: [String: Any] = [:] //<%= googleOptions %>  // an optional dictionary ([String:Any]) of Google authentication options
+        let googleCredentials = CredentialsGoogle(clientId: clientId,
+                                                  clientSecret: clientSecret,
+                                                  callbackUrl: googleCallbackUrl,
+                                                  options: googleOptions)
+        credentials.register(plugin: googleCredentials)
         
+        // <%= auth/google/initializeToken %>
+        let gTokenOptions: [String: Any] = [:] //<%= googleOptions %>  // an optional dictionary ([String:Any]) of Google authentication options
+        let googleTokenCredentials = CredentialsGoogleToken(options: gTokenOptions)
+        credentials.register(plugin: googleTokenCredentials)
+        
+        // <%= auth/http/initializeHttpBasic %>
+        let users = ["John" : "12345", "Mary" : "qwerasdf"]  // <%= httpUsers %>
         let basicCredentials = CredentialsHTTPBasic(verifyPassword: { userId, password, callback in
             if let storedPassword = users[userId] {
                 if (storedPassword == password) {
@@ -118,16 +122,14 @@ public class Controller {
                 callback(nil)
             }
         })
-        
         credentials.register(plugin: basicCredentials)
         
-        // if <%= httpDigest %> is selected
-        let users2: [String:String] = ["John" : "12345", "Mary" : "qwerasdf"]  // <%= httpUsers %>
-        let opaque: String? = "0a0b0c0d"  // <%= opaque %>
-        let realm: String? = "Kitura-users" // <%= realm %>
-        
+        // <%= auth/http/initializeHttpDigest %>
+        let users2 = ["John" : "12345", "Mary" : "qwerasdf"]  // <%= httpUsers %>
+        let opaque = "0a0b0c0d"  // <%= opaque %>
+        let realm = "Kitura-users" // <%= realm %>
         let digestCredentials = CredentialsHTTPDigest(userProfileLoader: { userId, callback in
-            if let storedPassword = users[userId] {
+            if let storedPassword = users2[userId] {
                 callback(UserProfile(id: userId, displayName: userId, provider: "HTTPDigest"), storedPassword)
             }
             else {
@@ -136,30 +138,20 @@ public class Controller {
         }, opaque: opaque, realm: realm)
         credentials.register(plugin: digestCredentials)
         
-        
-        
-        
         // Assign middleware instance
         router.get("/*", middleware: credentials)
         
+        // <%= web/initializeMiddleware %>
+        router.all("/", middleware: StaticFileServer(path: "/public")) // <%= publicPath %>
         
-        // if <% web %> is selected, add the following:
-        // router.all("/", middleware: StaticFileServer(path: <%= public_path %>"))
-        router.all("/", middleware: StaticFileServer())
-        // end if
-        
-        // if <% metrics %> is selected:
-        
-        
-        
+        // <%= middleware/profiling/initialization %>
         metrics = try SwiftMetrics()
+        // QUESTION: do we need line 150? What does this do?
         SwiftMetricsKitura(swiftMetricsInstance: metrics)
         let monitoring = metrics.monitor()
-        // end if
         
         router.all("/*", middleware: BodyParser())
 
-        
     }
     
 }
