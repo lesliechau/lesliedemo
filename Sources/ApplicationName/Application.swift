@@ -47,8 +47,8 @@ public func initialize() throws {
     router.all("/*", middleware: BodyParser())
     
     initializeIndex()
-    initializeCustomerRoutes()
-    initializeFlightRoutes()
+    // initializeCustomerRoutes()
+    // initializeFlightRoutes()
     
 }
 
