@@ -1,1 +1,1 @@
-// <%= data/postgresql/extension %>
+// {{ data/postgresql/extension }}
