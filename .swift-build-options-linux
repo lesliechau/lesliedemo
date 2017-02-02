@@ -1,3 +1,4 @@
 // This contains necessary compilation commands like:
 // -Xswiftc -DNOJSON
 // -Xlinker -lc++
+// {{middleware/profiling/compilation_flags}}
