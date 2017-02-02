@@ -19,6 +19,7 @@ RUN swift build --configuration release
 # RUN swift build
 
 # We can replace this port with what the user wants
+# EXPOSE {{PORT}}
 EXPOSE 8080
 
 CMD .build/release/Server
