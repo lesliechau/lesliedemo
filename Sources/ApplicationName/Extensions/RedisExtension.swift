@@ -1,1 +1,2 @@
-// <%= data/redis/extension %>
+// {{data/redis/extension}}
+
