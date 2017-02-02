@@ -1,13 +1,13 @@
 declared-services:
-  <%= data/cloudant/manifest %>
+  {{data/cloudant/manifest}}
 applications:
-- name: <%= application_name %>
+- name: {{applicationName}}
   path: ./src/server
-  memory: <%= application_memory %>
-  instances: <%= application_instances %>
+  memory: {{applicationMemory}}
+  instances: {{applicationInstances}}
   random-route: true
   disk_quota: 1024M
-  command: <%= application_name %>
+  command: {{applicationName}}
   buildpack: https://github.com/IBM-Swift/swift-buildpack#develop
   services:
-  - TodoListCloudantDatabase
+  - {{cloudantServiceName}}
