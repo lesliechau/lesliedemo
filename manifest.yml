@@ -1,18 +1,13 @@
 declared-services:
-  TodoListCloudantDatabase:
-    label: cloudantNoSQLDB
-    plan: Lite
+  {{data/cloudant/manifest}}
 applications:
-- name: ApplicationName
+- name: {{applicationName}}
   path: ./src/server
-  memory: 256M
-  instances: 1
+  memory: {{applicationMemory}}
+  instances: {{applicationInstances}}
   random-route: true
   disk_quota: 1024M
-  command: ApplicationNameServer
+  command: {{applicationName}}
   buildpack: https://github.com/IBM-Swift/swift-buildpack#develop
   services:
-  - TodoListCloudantDatabase
-
-# replace ApplicationName with actual app name.
-# replace command with app executable name. 
+  - {{cloudantServiceName}}

@@ -1,3 +1,33 @@
-{
-    // This is empty, but will contain some optional configuration files here.
+{      
+// general application information goes here.                                                                                                                                                                      
+  "config": {
+    "applicationName": "applicationName",
+    "port": 8090
+  },
+  // list of service configuration
+  "services": {
+      "auth": {
+          "type": "facebook",
+          "clientID": "XXXX",
+          "clientSecret": "XXXX",
+          "options": []
+      },
+      // persistence configuration
+      "data": [
+          {
+              "type": "cloudant",
+              "name": "XXX",
+              "hostname": "XXX",
+              "username": "XXX",
+              "password": "XXX"
+
+          },
+          {
+              "type": "redis",
+              "name": "XXX",
+              "hostname": "XXX",
+              "password": "XXX"
+          }
+      ]
+  }
 }
