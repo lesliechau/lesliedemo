@@ -1,0 +1,12 @@
+{
+  "appIconURL": "blueprint/appIcon.svg",
+  "description": "A basic Kitura Swift project.",
+  "name": "Basic",
+  "previewURLs": [
+    "blueprint/preview1.png",
+    "blueprint/preview2.png"
+  ],
+  "thumbnailURL": "blueprint/thumbnail.svg",
+  "requiredCapabilities": [],
+  "email": "rfdickerson@us.ibm.com"
+}
