@@ -1,1 +1,1 @@
-// <%= data/mongodb/extension %>
+// {{ data/mongodb/extension }}

@@ -1,1 +1,1 @@
-// <%= data/cloudant/extension %>
+// {{ data/cloudant/extension }}

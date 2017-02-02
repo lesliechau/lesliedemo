@@ -4,21 +4,18 @@ import Kitura
 import LoggerAPI
 import HeliumLogger
 
-// Replace with <%= applicationName %>
+// Replace with {{applicationName}}
 import ApplicationName
 
 do {
   
-  HeliumLogger.use(LoggerMessageType.info)
+    HeliumLogger.use(LoggerMessageType.info)
 
-  let controller = try Controller()
+    try initialize()
+    try run()
   
-  Kitura.addHTTPServer(onPort: controller.port, with: controller.router)
- 
-  Kitura.run()
-
 } catch let error {
   
-  Log.error(error.localizedDescription)
+    Log.error(error.localizedDescription)
 
 }

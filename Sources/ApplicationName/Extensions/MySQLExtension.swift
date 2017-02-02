@@ -1,1 +1,1 @@
-// <%= data/mysql/extension %>
+// {{ data/mysql/extension }}
