@@ -2,10 +2,10 @@
 import PackageDescription
 
 // let applicationName = "<% applicationName %>"
-let applicationName = "ApplicationName"
+let applicationName = "Application"
 
 // let applicationServerName =  "<% applicationName %>Server"
-let applicationServerName = "ApplicationNameServer"
+let applicationServerName = "Server"
 
 let package = Package(
     name: applicationName,

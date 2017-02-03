@@ -5,7 +5,7 @@ import LoggerAPI
 import HeliumLogger
 
 // Replace with {{applicationName}}
-import ApplicationName
+import Application
 
 do {
   

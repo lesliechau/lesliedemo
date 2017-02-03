@@ -1,5 +1,5 @@
 import XCTest
-@testable import ApplicationName
+@testable import Application
 
 class ApplicationTests: XCTestCase {
     func testExample() {

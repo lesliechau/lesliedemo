@@ -22,7 +22,6 @@ public var port: Int = 8080
 public func initialize() throws {
     
     try manager.load(file: "../../config.json")
-                .load(file: "../../bluemix.json")
                 .load(.environmentVariables)
     
     // {{ data/redis/declareDatabase }}
