@@ -1,0 +1,9 @@
+container-name : "demo-swift"
+run-cmd : "/root/project/docker-utils.sh run swiftProgram"
+build-cmd : "/root/project/docker-utils.sh build"
+test-cmd : "/root/project/docker-utils.sh test"
+debug-cmd : "/root/project/docker-utils.sh debug"
+host-src-path : "/Users/clay/Documents/swift/kitura-helloworld-master" # variable for Conan to substitute
+container-src-path : "/root/project"
+container-port-map : "8080:8080"
+container-debug-port-map : "9090:9090"

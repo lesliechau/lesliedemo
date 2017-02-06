@@ -1,25 +1,19 @@
 FROM ibmcom/swift-ubuntu:latest
 MAINTAINER IBM Swift Engineering at IBM Cloud
-LABEL Description="Linux Ubuntu 14.04 image with the Swift binaries"
-
-# Linux OS utils
-RUN apt-get update 
-
-# <%= data/postgresql/system-library-install %>
-
-WORKDIR $HOME
-
-# Copy the application source code
-COPY . $HOME
-
-# Compile the application
-RUN swift build --configuration release
-
-# If in local debug mode instead run:
-# RUN swift build
+LABEL Description="Template Dockerfile that extends the ibmcom/swift-ubuntu:latest image."
 
 # We can replace this port with what the user wants
 # EXPOSE {{PORT}}
-EXPOSE 8080
+EXPOSE 8080 9090
 
-CMD .build/release/Server
+# Linux OS utils
+RUN apt-get update
+
+# <%= data/postgresql/system-library-install %>
+
+# $HOME is /root
+WORKDIR $HOME/project
+
+COPY . $HOME/project
+
+CMD $HOME/project/docker-utils.sh build
