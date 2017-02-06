@@ -7,7 +7,7 @@ function help {
 
     Where:
       build                 Compiles your project
-      run                   Runs your project
+      run <program name>    Runs your project
       debug                 Starts debug server and your program
       test                  Runs test cases
       install-system-libs   Installs any system libraries from dependencies
@@ -68,8 +68,8 @@ function run {
 # Runtime arguments
 ACTION="$1"
 PROGRAM_NAME="$2"
-
 [[ -z $ACTION ]] && help && exit 0
+[ "$ACTION" = "run" ] && [[ -z "$PROGRAM_NAME" ]] && help && exit 0
 
 # Enter the build directory
 cd $HOME/project
