@@ -17,4 +17,4 @@ WORKDIR $HOME/project
 COPY . $HOME/project
 
 #CMD $HOME/project/docker-utils.sh build
-ENTRYPOINT ["bash", "/root/utils/build-utils.sh"]
+ENTRYPOINT ["bash", "/root/utils/build-utils.sh $HOME/project"]
