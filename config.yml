@@ -1,9 +1,9 @@
 container-name : "demo-swift"
-run-cmd : "/root/project/docker-utils.sh run {{applicationName}}"
-build-cmd : "/root/project/docker-utils.sh build"
-test-cmd : "/root/project/docker-utils.sh test"
-debug-cmd : "/root/project/docker-utils.sh debug"
-# Following needs to be updated as we discussed
+run-cmd : "/root/utils/build-utils.sh run {{applicationName}}"
+build-cmd : "/root/utils/build-utils.sh build"
+test-cmd : "/root/utils/build-utils.sh test"
+debug-cmd : "/root/utils/build-utils.sh debug {{applicationName}} 9090"
+# host-src-path needs to be updated as we discussed
 # Variable for Conan to substitute
 host-src-path : "/Users/clay/Documents/swift/kitura-helloworld-master"
 container-src-path : "/root/project"
