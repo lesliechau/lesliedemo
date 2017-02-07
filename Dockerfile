@@ -11,10 +11,8 @@ RUN apt-get update
 
 # <%= data/postgresql/system-library-install %>
 
-# $HOME is /root
-WORKDIR $HOME/project
+WORKDIR /root/project
 
-COPY . $HOME/project
+COPY . /root/project
 
-#CMD $HOME/project/docker-utils.sh build
-ENTRYPOINT ["bash", "/root/utils/build-utils.sh $HOME/project"]
+ENTRYPOINT ["bash", "/root/utils/build-utils.sh", "/root/project"]
