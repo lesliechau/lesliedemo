@@ -3,7 +3,7 @@ run-cmd : "run {{applicationName}}"
 build-cmd : "build"
 test-cmd : "test"
 debug-cmd : "debug {{applicationName}} 9090"
-# host-src-path needs to be updated as we discussed
+# TODO: host-src-path needs to be updated as we discussed
 # Variable for Conan to substitute
 host-src-path : "/Users/clay/Documents/swift/kitura-helloworld-master"
 container-src-path : "/root/project"
