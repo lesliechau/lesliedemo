@@ -15,4 +15,6 @@ WORKDIR /root/project
 
 COPY . /root/project
 
+ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/build-utils.sh /root/utils/build-utils.sh
+
 ENTRYPOINT ["bash", "/root/utils/build-utils.sh", "/root/project"]

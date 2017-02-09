@@ -1,0 +1,20 @@
+FROM ibmcom/swift-ubuntu-runtime:latest
+MAINTAINER IBM Swift Engineering at IBM Cloud
+LABEL Description="Template Dockerfile that extends the ibmcom/swift-ubuntu-runtime:latest image."
+
+# We can replace this port with what the user wants
+# EXPOSE {{PORT}}
+EXPOSE 8080 9090
+
+# Linux OS utils
+RUN apt-get update
+
+# <%= data/postgresql/system-library-install %>
+
+WORKDIR /root/project
+
+COPY . /root/project
+
+ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/build-utils.sh /root/utils/build-utils.sh
+
+ENTRYPOINT ["bash", "/root/utils/build-utils.sh", "/root/project", "run"]
