@@ -2,6 +2,9 @@ FROM ibmcom/swift-ubuntu:latest
 MAINTAINER IBM Swift Engineering at IBM Cloud
 LABEL Description="Template Dockerfile that extends the ibmcom/swift-ubuntu:latest image."
 
+# To override entrypoint, use --entrypoint=/bin/bash
+# See https://github.com/docker/docker/issues/5539
+
 # We can replace this port with what the user wants
 # EXPOSE {{PORT}}
 EXPOSE 8080 9090
@@ -15,6 +18,9 @@ WORKDIR /root/project
 
 COPY . /root/project
 
-ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/build-utils.sh /root/utils/build-utils.sh
+ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/dev-utils.sh /root/utils/dev-utils.sh
+ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/common-utils.sh /root/utils/common-utils.sh
 
-ENTRYPOINT ["bash", "/root/utils/build-utils.sh", "/root/project"]
+RUN cd /root/utils && chmod u+x *.sh
+
+ENTRYPOINT ["bash", "/root/utils/dev-utils.sh", "/root/project"]
