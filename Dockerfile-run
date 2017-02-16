@@ -19,7 +19,7 @@ WORKDIR /root/project
 
 COPY . /root/project
 
-ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/run-utils.sh /root/utils/run-utils.sh
-ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/develop/utils/common-utils.sh /root/utils/common-utils.sh
+ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/run-utils.sh /root/utils/run-utils.sh
+ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/common-utils.sh /root/utils/common-utils.sh
 
 ENTRYPOINT ["bash", "/root/utils/run-utils.sh", "/root/project"]
