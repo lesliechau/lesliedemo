@@ -20,8 +20,8 @@ WORKDIR /root/project
 COPY . /root/project
 
 ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/tools-utils.sh /root/utils/tools-utils.sh
-RUN chmod +x /root/utils/tools-utils.sh
+RUN chmod u+x /root/utils/tools-utils.sh
 ADD https://raw.githubusercontent.com/IBM-Swift/swift-ubuntu-docker/master/utils/common-utils.sh /root/utils/common-utils.sh
-RUN chmod +x /root/utils/common-utils.sh
+RUN chmod u+x /root/utils/common-utils.sh
 
 ENTRYPOINT ["bash", "/root/utils/tools-utils.sh", "/root/project"]
