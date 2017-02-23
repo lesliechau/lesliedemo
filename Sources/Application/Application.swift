@@ -18,12 +18,12 @@ import Configuration
 public let router = Router()
 public let manager = ConfigurationManager()
 public var port: Int = 8080
-    
+
 public func initialize() throws {
-    
-    try manager.load(file: "../../config.json")
+
+    manager.load(file: "../../config.json")
                 .load(.environmentVariables)
-    
+
     // {{ data/redis/declareDatabase }}
     // {{ data/redis/declareRedis }}
     // {{ middleware/profiling/declareSwiftMetrics }}
@@ -40,20 +40,18 @@ public func initialize() throws {
     // {{ auth/http/initializeHttpDigest }}
     // {{ web/initializeMiddleware }}
     // {{ middleware/profiling/initialization }}
-    
+
     port = manager["port"] as? Int ?? port
-    
+
     router.all("/*", middleware: BodyParser())
-    
+
     initializeIndex()
     // initializeCustomerRoutes()
     // initializeFlightRoutes()
-    
+
 }
 
 public func run() throws {
     Kitura.addHTTPServer(onPort: port, with: router)
     Kitura.run()
 }
-
-
